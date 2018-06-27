@@ -1,4 +1,5 @@
 import { signIn } from '../API/methods';
+import { Alert } from 'react-native'
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -28,6 +29,7 @@ export const login = (username, password) => {
     })
     .catch((error) => {
       console.log("Error autenticando");
+      Alert.alert("Inicio de sesión", "Usuario o contraseña incorrectos")
     });
   };
 }
