@@ -3,6 +3,7 @@ import { RootNavigator } from '../Navigator'
 const firstAction = RootNavigator.router.getActionForPathAndParams('Login');
 const tempNavState = RootNavigator.router.getStateForAction(firstAction);
 const secondAction = RootNavigator.router.getActionForPathAndParams('Home');
+const thirdAction = RootNavigator.router.getActionForPathAndParams('House')
 const initialNavState = RootNavigator.router.getStateForAction(secondAction);
 
 export default function reducer(state = tempNavState, action) {

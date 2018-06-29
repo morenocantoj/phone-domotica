@@ -1,5 +1,6 @@
 import HomeView from "../views/HomeView";
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
 const mapStateToProps = (state) => {
   return {
@@ -9,6 +10,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    houseScreen : (houseId) => dispatch(NavigationActions.navigate({routeName: 'House',
+      params: { houseId : houseId }
+    }))
   }
 };
 

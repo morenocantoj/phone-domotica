@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import LoginContainer from './containers/LoginContainer'
 import HomeContainer from './containers/HomeContainer'
+import HouseContainer from './containers/HouseContainer'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -16,6 +17,7 @@ const middleware = createReactNavigationReduxMiddleware(
 const RootNavigator = createStackNavigator({
   Login: { screen: LoginContainer },
   Home: { screen: HomeContainer },
+  House: { screen: HouseContainer },
 },
 {
   headerMode: 'none',
