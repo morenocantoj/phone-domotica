@@ -16,6 +16,11 @@ class Controllers extends Component {
     this.setState({controllers: nextProps.controllers})
   }
 
+  goController(controllerId) {
+    console.log("Go to controller " + controllerId)
+    //this.props.controllerScreen(controllerId)
+  }
+
   render() {
     return (
       <List containerStyle={{marginTop: 0}}>
@@ -25,6 +30,8 @@ class Controllers extends Component {
           renderItem={({item}) => (
             <ListItem
               title={item.nombre}
+              leftIcon={{ name: 'tv'}}
+              onPress={ () => this.goController(item.id)}
             />
           )}
         />
