@@ -34,7 +34,7 @@ class HomeView extends Component {
       <View style={styles.viewContainer}>
         <Toolbar centerElement="Mis casas inteligentes"/>
           <ScrollView contentContainerStyle={styles.cardList}>
-            <Houses houses={this.state.houses} />
+            <Houses houses={this.state.houses} {...this.props}/>
           </ScrollView>
       </View>
     )

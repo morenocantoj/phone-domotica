@@ -17,6 +17,10 @@ export default class Houses extends Component {
     this.setState({houses: nextProps.houses})
   }
 
+  goHouse(houseId) {
+    this.props.houseScreen()
+  }
+
   renderHouses() {
     if (this.state.houses.casas) {
       return this.state.houses.casas.map( (house) => {
@@ -26,6 +30,7 @@ export default class Houses extends Component {
                   iosIcon={'ios-home'}
                   title={house.nombre}
                   iconBgColor={'#FFC107'}
+                  onPress={() => this.goHouse(house.id) }
                  />
       })
     }

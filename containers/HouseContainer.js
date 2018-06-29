@@ -1,5 +1,5 @@
-import HomeView from "../views/HomeView";
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import HouseView from '../views/HouseView'
 import { NavigationActions } from 'react-navigation';
 
 const mapStateToProps = (state) => {
@@ -10,11 +10,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    houseScreen : () => dispatch(NavigationActions.navigate({ routeName: 'House' }))
+    goBack : () => dispatch(NavigationActions.back())
   }
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomeView)
+)(HouseView)
