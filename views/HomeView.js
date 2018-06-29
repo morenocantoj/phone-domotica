@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Toolbar, Button } from 'react-native-material-ui';
 import { Constants } from 'expo';
+import { getHouses } from '../API/methods'
+import { Alert } from 'react-native'
+import Houses from '../components/Houses'
 
 class HomeView extends Component {
 
@@ -9,8 +12,18 @@ class HomeView extends Component {
     super(props);
 
     this.state = {
-      user : this.props.user
+      user : this.props.user,
+      houses: {}
     }
+  }
+
+  componentWillMount() {
+    getHouses(this.props.user).then((response) => {
+      this.setState({houses: response})
+    })
+    .catch((error) => {
+      Alert.alert("Error", "¡Imposible acceder a tus datos!")
+    })
   }
 
   render() {
@@ -18,12 +31,29 @@ class HomeView extends Component {
       console.log("Redirect to login!")
     }
     return (
-      <View style={{ paddingTop: Constants.statusBarHeight }}>
-        <Toolbar centerElement="Joc i partida xavals"/>
-        <Button text="¿Has olvidado tu contraseña?"/> 
+      <View style={styles.viewContainer}>
+        <Toolbar centerElement="Mis casas inteligentes"/>
+          <ScrollView contentContainerStyle={styles.cardList}>
+            <Houses houses={this.state.houses} />
+          </ScrollView>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  viewContainer: {
+    ...StyleSheet.absoluteFillObject,
+    paddingTop: Constants.statusBarHeight
+  },
+  container: {
+    paddingLeft:20,
+    paddingRight:20,
+  },
+  cardList: {
+    alignItems: 'center',
+    width: '100%'
+  },
+});
 
 export default HomeView;
