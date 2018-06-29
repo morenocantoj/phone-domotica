@@ -10,7 +10,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    houseScreen : () => dispatch(NavigationActions.navigate({ routeName: 'House' }))
+    houseScreen : (houseId) => dispatch(NavigationActions.navigate({routeName: 'House',
+      params: { houseId : houseId }
+    }))
   }
 };
 

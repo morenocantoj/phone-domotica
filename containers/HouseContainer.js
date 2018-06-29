@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import HouseView from '../views/HouseView'
 import { NavigationActions } from 'react-navigation';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    houseId: props.navigation.state.params.houseId
   }
 };
 

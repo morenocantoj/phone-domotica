@@ -18,7 +18,7 @@ export default class Houses extends Component {
   }
 
   goHouse(houseId) {
-    this.props.houseScreen()
+    this.props.houseScreen(houseId)
   }
 
   renderHouses() {
