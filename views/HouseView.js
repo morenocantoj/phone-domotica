@@ -4,6 +4,7 @@ import { Constants } from 'expo';
 import { Toolbar, Button } from 'react-native-material-ui';
 import { getHouse } from '../API/methods'
 import Controllers from '../components/Controllers'
+import { Alert } from 'react-native'
 
 class HouseView extends Component {
 
@@ -24,7 +25,7 @@ class HouseView extends Component {
       this.setState({house: house});
     })
     .catch((error) => {
-      console.log("¡ERROR!")
+      Alert.alert("Error", "¡Imposible acceder a tus datos de la casa!")
     })
   }
 
