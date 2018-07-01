@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import LoginContainer from './containers/LoginContainer'
 import HomeContainer from './containers/HomeContainer'
 import HouseContainer from './containers/HouseContainer'
+import ControllerContainer from './containers/ControllerContainer'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -18,6 +19,7 @@ const RootNavigator = createStackNavigator({
   Login: { screen: LoginContainer },
   Home: { screen: HomeContainer },
   House: { screen: HouseContainer },
+  Controller: { screen: ControllerContainer },
 },
 {
   headerMode: 'none',

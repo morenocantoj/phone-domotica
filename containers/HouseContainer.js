@@ -11,7 +11,10 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goBack : () => dispatch(NavigationActions.back())
+    goBack : () => dispatch(NavigationActions.back()),
+    controllerScreen : (controllerId) => dispatch(NavigationActions.navigate({routeName: 'Controller',
+      params: { controllerId : controllerId }
+    }))
   }
 };
 

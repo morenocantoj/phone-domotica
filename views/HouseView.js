@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView, Dimensions, BackHandler } from 'react-native';
 import { Constants } from 'expo';
-import { Toolbar, Button } from 'react-native-material-ui';
+import { Toolbar } from 'react-native-material-ui';
 import { getHouse } from '../API/methods'
 import Controllers from '../components/Controllers'
 import { Alert } from 'react-native'
