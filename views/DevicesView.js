@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
+import Devices from '../components/Devices'
 
 class DevicesView extends Component {
 
@@ -11,11 +12,15 @@ class DevicesView extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({devices: nextProps.screenProps.devices})
+  }
+
   render() {
     return (
-      <View>
-
-      </View>
+      <ScrollView>
+        <Devices devices={this.state.devices}/>
+      </ScrollView>
     )
   }
 }

@@ -40,7 +40,7 @@ class ControllerView extends Component {
           onLeftElementPress={ () => this.props.goBack() }
           centerElement={this.state.controller.nombre}
           style={{ container: styles.toolbarContainer }}/>
-        <ControllerNavigator/>
+        <ControllerNavigator screenProps={{ devices: this.state.controller.dispositivos }}/>
       </View>
     )
   }

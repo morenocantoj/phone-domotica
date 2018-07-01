@@ -4,7 +4,7 @@ import LoginContainer from './containers/LoginContainer'
 import HomeContainer from './containers/HomeContainer'
 import HouseContainer from './containers/HouseContainer'
 import ControllerContainer from './containers/ControllerContainer'
-import DevicesContainer from './containers/DevicesContainer'
+import DevicesView from './views/DevicesView'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -33,7 +33,7 @@ const RootNavigator = createStackNavigator({
 // Controller tabs navigation (dont use redux)
 const ControllerNavigator = createMaterialTopTabNavigator({
   Devices: {
-    screen: DevicesContainer,
+    screen: DevicesView,
     navigationOptions: () => ({
       title: 'Dispositivos'
     })

@@ -5,8 +5,7 @@ import DevicesView from '../views/DevicesView'
 const mapStateToProps = (state, props) => {
   return {
     user: state.auth.user,
-    controllerId: props.controllerId,
-    houseId: props.houseId
+    devices: props.controller.dispositivos
   }
 };
 
