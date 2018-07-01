@@ -17,7 +17,7 @@ class Controllers extends Component {
   }
 
   goController(controllerId) {
-    this.props.controllerScreen(controllerId)
+    this.props.controllerScreen(this.props.houseId, controllerId)
   }
 
   render() {

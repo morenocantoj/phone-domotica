@@ -5,7 +5,8 @@ import ControllerView from '../views/ControllerView'
 const mapStateToProps = (state, props) => {
   return {
     user: state.auth.user,
-    controllerId: props.navigation.state.params.controllerId
+    controllerId: props.navigation.state.params.controllerId,
+    houseId: props.navigation.state.params.houseId
   }
 };
 
