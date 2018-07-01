@@ -4,6 +4,7 @@ import { StyleSheet, View, ScrollView, Dimensions, BackHandler } from 'react-nat
 import { Toolbar } from 'react-native-material-ui';
 import { Alert } from 'react-native'
 import { getController } from '../API/methods'
+import { ControllerNavigator } from '../Navigator'
 
 class ControllerView extends Component {
 
@@ -37,7 +38,9 @@ class ControllerView extends Component {
         <Toolbar
           leftElement="arrow-back"
           onLeftElementPress={ () => this.props.goBack() }
-          centerElement={this.state.controller.nombre}/>
+          centerElement={this.state.controller.nombre}
+          style={{ container: styles.toolbarContainer }}/>
+        <ControllerNavigator/>
       </View>
     )
   }
@@ -47,6 +50,11 @@ const styles = StyleSheet.create({
   viewContainer: {
     ...StyleSheet.absoluteFillObject,
     paddingTop: Constants.statusBarHeight
+  },
+  toolbarContainer: {
+    borderBottomWidth: 0,
+    elevation: 0,
+    shadowOpacity: 0
   }
 });
 
