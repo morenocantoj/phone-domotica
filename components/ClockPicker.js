@@ -15,7 +15,6 @@ class ClockPicker extends Component {
           is24Hour: false, // Will display '2 PM'
         });
         if (action === TimePickerAndroid.timeSetAction) {
-          console.log("Hora y minutos "+hour+" "+minute)
           this.props.onUpdate(hour, minute)
         }
       } catch ({code, message}) {
@@ -33,7 +32,8 @@ class ClockPicker extends Component {
       <View style={styles.container}>
         <Text
           style={styles.hour}
-          onPress={() => this.setClock()}>
+          onPress={() => this.setClock()}
+          textDecorationLine={'underline'}>
           {this.props.hour}:{this.props.minute}{this.props.minute == 0 ? '0' : ''}
         </Text>
       </View>
