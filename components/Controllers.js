@@ -17,8 +17,7 @@ class Controllers extends Component {
   }
 
   goController(controllerId) {
-    console.log("Go to controller " + controllerId)
-    //this.props.controllerScreen(controllerId)
+    this.props.controllerScreen(this.props.houseId, controllerId)
   }
 
   render() {

@@ -58,6 +58,7 @@ export const getController = (houseId, controllerId) => {
   })
   .catch(function (error) {
     return error.json();
+    Alert.alert("Error", "¡Imposible acceder a tus datos de la zona actual!")
   })
 }
 
