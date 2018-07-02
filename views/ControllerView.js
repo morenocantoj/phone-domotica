@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Constants } from 'expo';
 import { StyleSheet, View, ScrollView, Dimensions, BackHandler } from 'react-native';
-import { Toolbar } from 'react-native-material-ui';
+import { Toolbar, ActionButton } from 'react-native-material-ui';
 import { Alert } from 'react-native'
 import { getController } from '../API/methods'
 import { ControllerNavigator } from '../Navigator'
@@ -32,6 +32,24 @@ class ControllerView extends Component {
     })
   }
 
+  dispatchProgramationAction(action) {
+    switch (action) {
+      case 'cloud':
+        this.goToClimaProgramation(this.state.controller.dispositivos)
+        break;
+      case 'highlight':
+        console.log("IMPLEMENT!")
+        break
+      default:
+        break
+    }
+  }
+
+  goToClimaProgramation(devices) {
+    // TODO: Add programation
+    console.log("Go to clima programation")
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -41,6 +59,16 @@ class ControllerView extends Component {
           centerElement={this.state.controller.nombre}
           style={{ container: styles.toolbarContainer }}/>
         <ControllerNavigator screenProps={{ devices: this.state.controller.dispositivos }}/>
+        <ActionButton
+          style={{ container: styles.actionButton }}
+          icon={'access-alarm'}
+          actions={[
+            { icon: 'highlight', label: 'Luces'},
+            { icon: 'cloud', label: 'Climatización'},
+          ]}
+          transition="speedDial"
+          onPress={(action) => this.dispatchProgramationAction(action) }
+          />
       </View>
     )
   }
@@ -55,6 +83,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     elevation: 0,
     shadowOpacity: 0
+  },
+  actionButton: {
+    backgroundColor: '#FFC107',
   }
 });
 

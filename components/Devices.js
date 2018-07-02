@@ -8,6 +8,10 @@ class Devices extends Component {
     super(props)
   }
 
+  goToClimatization(deviceId) {
+    console.log("Navigate to climatization " + deviceId)
+  }
+
   render() {
     return (
       <List containerStyle={{marginTop: 0}}>
@@ -18,9 +22,9 @@ class Devices extends Component {
             <ListItem
               title={item.nombre}
               subtitle={'Aire acondicionado'}
-              leftIcon={{ name: 'tv'}}
+              leftIcon={{ name: 'cloud'}}
               rightTitle={item.temperatura + ' ºC'}
-              onPress={ () => console.log("TODO: Navigate to device details")}
+              onPress={ () => this.goToClimatization(item.dispositivo_id)}
             />
           )}
         />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import Devices from '../components/Devices'
 
 class DevicesView extends Component {
