@@ -30,19 +30,17 @@ class ClimaPicker extends Component {
     return (
       <View style={styles.container}>
         <Icon
-          reverse
           name={'chevron-left'}
           color={'#757575'}
-          size={22}
+          size={36}
           onPress={() => this.decreaseClima()}/>
         <Text style={styles.climaText}>
           {this.props.clima}ºC
         </Text>
         <Icon
-          reverse
           name={'chevron-right'}
           color={'#757575'}
-          size={22}
+          size={36}
           onPress={() => this.increaseClima()}/>
       </View>
     )
