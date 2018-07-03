@@ -32,8 +32,7 @@ class ClockPicker extends Component {
       <View style={styles.container}>
         <Text
           style={styles.hour}
-          onPress={() => this.setClock()}
-          textDecorationLine={'underline'}>
+          onPress={() => this.setClock()}>
           {this.props.hour}:{this.props.minute}{this.props.minute == 0 ? '0' : ''}
         </Text>
       </View>

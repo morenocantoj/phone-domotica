@@ -5,6 +5,8 @@ import { Toolbar, Button, Subheader } from 'react-native-material-ui';
 import ClockPicker from '../components/ClockPicker'
 import { CheckBox } from 'react-native-elements'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import DatePicker from 'react-native-datepicker'
+import moment from 'moment'
 
 class ProgramationView extends Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class ProgramationView extends Component {
     this.state = {
       hour: 14,
       minute: 0,
-      date: '',
+      date: moment(new Date()),
 
       firstElement: 0,
       elementSelected: 0,
@@ -74,6 +76,12 @@ class ProgramationView extends Component {
     })
   }
 
+  setDate(date) {
+    this.setState({
+      date: date
+    })
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -82,6 +90,29 @@ class ProgramationView extends Component {
           hour={this.state.hour}
           minute={this.state.minute}
           onUpdate={(hour, minute) => this.updateClock(hour, minute)}/>
+        <DatePicker
+          mode={'date'}
+          date={this.state.date}
+          placeholder={'Selecciona una fecha'}
+          format={'DD-MM-YYYY'}
+          minDate={new Date()}
+          confirmBtnText={'Confirmar'}
+          cancelBtnText={'Cancelar'}
+          onDateChange={(date) => this.setDate(date)}
+          style={styles.datePicker}
+          showIcon={false}
+          customStyles={{
+            dateInput: {
+              borderLeftWidth: 0,
+              borderRightWidth: 0,
+              borderTopWidth: 0,
+              borderBottomWidth: 0,
+            },
+            dateText: {
+              fontSize: 24
+            }
+          }}
+          />
         <Subheader text={'Dispositivos disponibles (climatización)'}/>
         <ScrollView contentContainerStyle={styles.devices}>
           { this.renderProgramation() }
@@ -106,6 +137,11 @@ const styles = StyleSheet.create({
   radioText: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start'
+  },
+  datePicker: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
   }
 });
 
