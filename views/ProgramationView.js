@@ -7,7 +7,7 @@ import RadioForm, { RadioButton, RadioButtonInput } from 'react-native-simple-ra
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import ClimaPicker from '../components/ClimaPicker'
-import { editDevice, programDevice } from '../API/methods'
+import { programDevice } from '../API/methods'
 import Toast, { DURATION } from 'react-native-easy-toast'
 
 class ProgramationView extends Component {

@@ -57,7 +57,11 @@ class ControllerView extends Component {
           onLeftElementPress={ () => this.props.goBack() }
           centerElement={this.state.controller.nombre}
           style={{ container: styles.toolbarContainer }}/>
-        <ControllerNavigator screenProps={{ devices: this.state.controller.dispositivos }}/>
+        <ControllerNavigator screenProps={{
+          devices: this.state.controller.dispositivos,
+          houseId: this.props.houseId,
+          controllerId: this.props.controllerId,
+          token: this.props.user.token}}/>
         <ActionButton
           style={{ container: styles.actionButton }}
           icon={'access-alarm'}

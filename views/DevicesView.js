@@ -4,7 +4,10 @@ import Devices from '../components/Devices'
 import { Icon } from 'react-native-elements'
 import { Subheader, Button } from 'react-native-material-ui';
 import ClimaPicker from '../components/ClimaPicker'
+import { editDevice } from '../API/methods'
+import Toast, { DURATION } from 'react-native-easy-toast'
 
+// Very important TODO: Connect Tabbar with Redux
 class DevicesView extends Component {
 
   constructor(props) {
@@ -14,19 +17,27 @@ class DevicesView extends Component {
       devices: [],
       selectedDevice: 0,
       showModal: false,
-      clima: 21
+      clima: 21,
+      houseId: '',
+      controllerId: '',
+      userToken: ''
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({devices: nextProps.screenProps.devices})
+    this.setState({
+      devices: nextProps.screenProps.devices,
+      houseId: nextProps.screenProps.houseId,
+      controllerId: nextProps.screenProps.controllerId,
+      userToken: nextProps.screenProps.token
+    })
   }
 
   onSelectDevice(deviceId, climaDevice) {
     this.setState({
       showModal: true,
       selectedDevice: deviceId,
-      clima: climaDevice
+      clima: climaDevice,
     })
   }
 
@@ -37,7 +48,17 @@ class DevicesView extends Component {
   }
 
   setDevice() {
-    // TODO: API method here!!
+    console.log(this.state.houseId+" "+this.state.controllerId+" "+this.state.selectedDevice+" "+this.state.userToken)
+
+    editDevice({token: this.state.userToken, houseId: this.state.houseId,
+      controllerId: this.state.controllerId, deviceId: this.state.selectedDevice,
+      temperatura: {temperatura: this.state.clima}})
+      .then((response) => {
+        this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+          // Close modal
+          this.setState({showModal: false})
+        });
+      })
   }
 
   render() {
@@ -62,6 +83,11 @@ class DevicesView extends Component {
                   <Button primary onPress={() => this.setDevice()} text="Configurar dispositivo"/>
                   <Button onPress={() => this.setState({showModal: false})} text="Cancelar"/>
                 </View>
+                <Toast
+                  ref={'toast'}
+                  style={styles.toastContainer}
+                  position='bottom'
+                  positionValue={150}/>
             </View>
         </Modal>
       </ScrollView>
@@ -78,6 +104,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginTop: 60,
+  },
+  toastContainer: {
+    backgroundColor:'#212121',
   },
 })
 
