@@ -8,8 +8,8 @@ class Devices extends Component {
     super(props)
   }
 
-  goToClimatization(deviceId) {
-    console.log("Navigate to climatization " + deviceId)
+  goToClimatization(deviceId, climaDevice) {
+    this.props.onSelectDevice(deviceId, climaDevice)
   }
 
   render() {
@@ -24,7 +24,7 @@ class Devices extends Component {
               subtitle={'Aire acondicionado'}
               leftIcon={{ name: 'cloud'}}
               rightTitle={item.temperatura + ' ºC'}
-              onPress={ () => this.goToClimatization(item.dispositivo_id)}
+              onPress={ () => this.goToClimatization(item.dispositivo_id, item.temperatura)}
             />
           )}
         />
