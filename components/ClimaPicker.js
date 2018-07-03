@@ -12,6 +12,20 @@ class ClimaPicker extends Component {
     }
   }
 
+  decreaseClima() {
+    // Only decrease if we dont reached limit
+    if (this.props.clima > this.state.minClima) {
+      this.props.onUpdate(this.props.clima - 1)
+    }
+  }
+
+  increaseClima() {
+    // Only increases if we dont reached limit
+    if (this.props.clima < this.state.maxClima) {
+      this.props.onUpdate(this.props.clima + 1)
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -19,7 +33,8 @@ class ClimaPicker extends Component {
           reverse
           name={'chevron-left'}
           color={'#757575'}
-          size={22}/>
+          size={22}
+          onPress={() => this.decreaseClima()}/>
         <Text style={styles.climaText}>
           {this.props.clima}ºC
         </Text>
@@ -27,7 +42,8 @@ class ClimaPicker extends Component {
           reverse
           name={'chevron-right'}
           color={'#757575'}
-          size={22}/>
+          size={22}
+          onPress={() => this.increaseClima()}/>
       </View>
     )
   }

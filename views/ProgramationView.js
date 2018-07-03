@@ -79,7 +79,7 @@ class ProgramationView extends Component {
     })
   }
 
-  updateclima(clima) {
+  updateClima(clima) {
     this.setState({
       clima: clima
     })
