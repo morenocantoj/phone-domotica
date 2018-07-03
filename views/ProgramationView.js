@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     paddingLeft: 20,
+    height: 80,
     ...StyleSheet.absoluteFillObject
   },
   radioText: {
