@@ -4,7 +4,7 @@ import Devices from '../components/Devices'
 import { Icon } from 'react-native-elements'
 import { Subheader, Button } from 'react-native-material-ui';
 import ClimaPicker from '../components/ClimaPicker'
-import { editDevice } from '../API/methods'
+import { editDevice, getController } from '../API/methods'
 import Toast, { DURATION } from 'react-native-easy-toast'
 
 // Very important TODO: Connect Tabbar with Redux
@@ -48,17 +48,23 @@ class DevicesView extends Component {
   }
 
   setDevice() {
-    console.log(this.state.houseId+" "+this.state.controllerId+" "+this.state.selectedDevice+" "+this.state.userToken)
-
     editDevice({token: this.state.userToken, houseId: this.state.houseId,
       controllerId: this.state.controllerId, deviceId: this.state.selectedDevice,
       temperatura: {temperatura: this.state.clima}})
       .then((response) => {
-        this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
-          // Close modal
-          this.setState({showModal: false})
-        });
+        this.getDevices()
+        this.setState({showModal: false})
       })
+  }
+
+  getDevices() {
+    getController(this.state.houseId, this.state.controllerId)
+    .then((controller) => {
+      this.setState({devices: controller.dispositivos});
+    })
+    .catch((error) => {
+      console.log("Error retrieving data from server");
+    });
   }
 
   render() {
