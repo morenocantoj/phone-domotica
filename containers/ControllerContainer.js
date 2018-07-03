@@ -12,7 +12,10 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goBack : () => dispatch(NavigationActions.back())
+    goBack : () => dispatch(NavigationActions.back()),
+    goProgramation : (kindProgramation, devices) => dispatch(NavigationActions.navigate({routeName: 'NewProgramation',
+      params: { kindProgramation: kindProgramation, devices: devices }
+    }))
   }
 };
 

@@ -5,6 +5,7 @@ import HomeContainer from './containers/HomeContainer'
 import HouseContainer from './containers/HouseContainer'
 import ControllerContainer from './containers/ControllerContainer'
 import DevicesView from './views/DevicesView'
+import ProgramationContainer from './containers/ProgramationContainer'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -22,6 +23,7 @@ const RootNavigator = createStackNavigator({
   Home: { screen: HomeContainer },
   House: { screen: HouseContainer },
   Controller: { screen: ControllerContainer },
+  NewProgramation: { screen: ProgramationContainer },
 },
 {
   headerMode: 'none',

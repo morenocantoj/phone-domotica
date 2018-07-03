@@ -46,8 +46,7 @@ class ControllerView extends Component {
   }
 
   goToClimaProgramation(devices) {
-    // TODO: Add programation
-    console.log("Go to clima programation")
+    this.props.goProgramation("climatization", devices)
   }
 
   render() {
