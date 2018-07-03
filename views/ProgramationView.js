@@ -93,44 +93,46 @@ class ProgramationView extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.viewContainer}>
+      <View style={styles.viewContainer}>
         <Toolbar centerElement="Nueva programación"/>
-        <ClockPicker
-          hour={this.state.hour}
-          minute={this.state.minute}
-          onUpdate={(hour, minute) => this.updateClock(hour, minute)}/>
-        <DatePicker
-          mode={'date'}
-          date={this.state.date}
-          placeholder={'Selecciona una fecha'}
-          format={'DD-MM-YYYY'}
-          minDate={new Date()}
-          confirmBtnText={'Confirmar'}
-          cancelBtnText={'Cancelar'}
-          onDateChange={(date) => this.setDate(date)}
-          style={styles.datePicker}
-          showIcon={false}
-          customStyles={{
-            dateInput: {
-              borderLeftWidth: 0,
-              borderRightWidth: 0,
-              borderTopWidth: 0,
-              borderBottomWidth: 0,
-            },
-            dateText: {
-              fontSize: 24
-            }
-          }}
-          />
-        <Subheader text={'Valor programado'}/>
-        <ClimaPicker
-          clima={this.state.clima}
-          onUpdate={(newClima) => this.updateClima(newClima)}/>
-        <Subheader text={'Dispositivos disponibles (climatización)'}/>
-        <View style={styles.devices}>
-          { this.renderProgramation() }
-        </View>
-      </ScrollView>
+        <ScrollView>
+          <ClockPicker
+            hour={this.state.hour}
+            minute={this.state.minute}
+            onUpdate={(hour, minute) => this.updateClock(hour, minute)}/>
+          <DatePicker
+            mode={'date'}
+            date={this.state.date}
+            placeholder={'Selecciona una fecha'}
+            format={'DD-MM-YYYY'}
+            minDate={new Date()}
+            confirmBtnText={'Confirmar'}
+            cancelBtnText={'Cancelar'}
+            onDateChange={(date) => this.setDate(date)}
+            style={styles.datePicker}
+            showIcon={false}
+            customStyles={{
+              dateInput: {
+                borderLeftWidth: 0,
+                borderRightWidth: 0,
+                borderTopWidth: 0,
+                borderBottomWidth: 0,
+              },
+              dateText: {
+                fontSize: 24
+              }
+            }}
+            />
+          <Subheader text={'Valor programado'}/>
+          <ClimaPicker
+            clima={this.state.clima}
+            onUpdate={(newClima) => this.updateClima(newClima)}/>
+          <Subheader text={'Dispositivos disponibles (climatización)'}/>
+          <View style={styles.devices}>
+            { this.renderProgramation() }
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }
