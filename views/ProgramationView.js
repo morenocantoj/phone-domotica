@@ -7,6 +7,7 @@ import { CheckBox } from 'react-native-elements'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
+import ClimaPicker from '../components/ClimaPicker'
 
 class ProgramationView extends Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class ProgramationView extends Component {
       firstElement: 0,
       elementSelected: 0,
       deviceSelected: 0,
+
+      clima: 21
     }
   }
 
@@ -76,6 +79,12 @@ class ProgramationView extends Component {
     })
   }
 
+  updateclima(clima) {
+    this.setState({
+      clima: clima
+    })
+  }
+
   setDate(date) {
     this.setState({
       date: date
@@ -84,7 +93,7 @@ class ProgramationView extends Component {
 
   render() {
     return (
-      <View style={styles.viewContainer}>
+      <ScrollView contentContainerStyle={styles.viewContainer}>
         <Toolbar centerElement="Nueva programación"/>
         <ClockPicker
           hour={this.state.hour}
@@ -113,11 +122,15 @@ class ProgramationView extends Component {
             }
           }}
           />
+        <Subheader text={'Valor programado'}/>
+        <ClimaPicker
+          clima={this.state.clima}
+          onUpdate={(newClima) => this.updateClima(newClima)}/>
         <Subheader text={'Dispositivos disponibles (climatización)'}/>
-        <ScrollView contentContainerStyle={styles.devices}>
+        <View style={styles.devices}>
           { this.renderProgramation() }
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 }
@@ -126,14 +139,14 @@ const styles = StyleSheet.create({
   viewContainer: {
     ...StyleSheet.absoluteFillObject,
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flex: 1,
   },
   devices: {
     justifyContent: 'flex-start',
     flexDirection: 'row',
     paddingLeft: 20,
-    height: 80,
-    ...StyleSheet.absoluteFillObject
+    flex: 2,
   },
   radioText: {
     justifyContent: 'flex-start',
