@@ -17,7 +17,7 @@ class ProgramationView extends Component {
     this.state = {
       hour: 14,
       minute: 0,
-      date: moment(new Date()),
+      date: moment(new Date()).format('YYYY-MM-DD'),
 
       firstElement: 0,
       elementSelected: 0,
@@ -93,8 +93,15 @@ class ProgramationView extends Component {
   }
 
   doProgramation() {
-    console.log("Devices selected and device id "+this.state.elementSelected+" "+this.state.deviceSelected)
-    var fecha = this.state.date+' '+this.state.hour+':'+this.state.minute
+    // Render good minutes
+    var minute = '00'
+    if (this.state.minute > 0 && this.state.minute < 10) {
+      minute = '0'+this.state.minute
+    } else if (this.state.minute > 10) {
+      minute = this.state.minute
+    }
+
+    var fecha = this.state.date+' '+this.state.hour+':'+minute
 
     programDevice({token: this.props.user.token,
       houseId: this.props.houseId,

@@ -103,11 +103,11 @@ export const programDevice = (body) => {
   console.log("PUT program device")
   const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId+'/programacion'
 
-  var jsonBody = [{
+  var jsonBody = {
     dispositivo_id: body.deviceId,
     fecha: body.fecha,
     action: 'PUT temperatura ' + body.clima
-  }]
+  }
 
   return fetch(url, {
     method: 'POST',
@@ -118,11 +118,9 @@ export const programDevice = (body) => {
     body: JSON.stringify(jsonBody)
 
   }).then(function (response) {
-
     return response.json();
   })
   .catch(function (error) {
-
     return error.json();
   })
 }
