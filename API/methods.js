@@ -99,6 +99,34 @@ export const editDevice = (body) => {
   })
 }
 
+export const programDevice = (body) => {
+  console.log("PUT program device")
+  const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId+'/programacion'
+
+  var jsonBody = [{
+    dispositivo_id: body.deviceId,
+    fecha: body.fecha,
+    action: 'PUT temperatura ' + body.clima
+  }]
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + body.token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonBody)
+
+  }).then(function (response) {
+
+    return response.json();
+  })
+  .catch(function (error) {
+
+    return error.json();
+  })
+}
+
 export const createDevice = (body) => {
   console.log("POST device");
   const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId;

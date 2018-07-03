@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, ScrollView, TimePickerAndroid, DatePickerAndroid, Text } from 'react-native'
 import { Constants } from 'expo';
-import { Toolbar, Button, Subheader } from 'react-native-material-ui';
+import { Toolbar, Button, Subheader, ActionButton } from 'react-native-material-ui';
 import ClockPicker from '../components/ClockPicker'
-import { CheckBox } from 'react-native-elements'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import RadioForm, { RadioButton, RadioButtonInput } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import ClimaPicker from '../components/ClimaPicker'
+import { editDevice, programDevice } from '../API/methods'
+import Toast, { DURATION } from 'react-native-easy-toast'
 
 class ProgramationView extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class ProgramationView extends Component {
 
       firstElement: 0,
       elementSelected: 0,
-      deviceSelected: 0,
+      deviceSelected: props.devices[0].dispositivo_id,
 
       clima: 21
     }
@@ -91,6 +92,25 @@ class ProgramationView extends Component {
     })
   }
 
+  doProgramation() {
+    console.log("Devices selected and device id "+this.state.elementSelected+" "+this.state.deviceSelected)
+    var fecha = this.state.date+' '+this.state.hour+':'+this.state.minute
+
+    programDevice({token: this.props.user.token,
+      houseId: this.props.houseId,
+      controllerId: this.props.controllerId,
+      deviceId: this.state.deviceSelected,
+      fecha: fecha,
+      clima: this.state.clima}).then((response) => {
+        this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+          this.props.goBack()
+        });
+
+      }).catch((error) => {
+        this.refs.toast.show('¡Error al programar dispositivo!', 1500)
+      })
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -132,6 +152,15 @@ class ProgramationView extends Component {
             { this.renderProgramation() }
           </View>
         </ScrollView>
+        <ActionButton
+          icon={'check'}
+          onPress={() => this.doProgramation()}
+          style={{ container: styles.actionButton }}/>
+        <Toast
+          ref={'toast'}
+          style={styles.toastContainer}
+          position='bottom'
+          positionValue={50}/>
       </View>
     )
   }
@@ -141,6 +170,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     ...StyleSheet.absoluteFillObject,
     paddingTop: Constants.statusBarHeight,
+    paddingBottom: 24,
     backgroundColor: 'white',
     flex: 1,
   },
@@ -158,6 +188,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
+  },
+  actionButton: {
+    backgroundColor: '#FFC107',
+  },
+  toastContainer: {
+    backgroundColor:'#212121',
   }
 });
 
