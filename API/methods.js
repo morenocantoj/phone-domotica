@@ -125,6 +125,32 @@ export const programDevice = (body) => {
   })
 }
 
+export const editDeviceLight = (body) => {
+  console.log("PUT device light");
+  const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId+'/luz/'+body.deviceId;
+
+  return fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + body.token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'status': body.status
+    })
+
+  }).then(function (response) {
+    if (response.status != "200") {
+      Alert.alert("Error", "¡No se ha podido realizar la acción!")
+    }
+  })
+  .catch(function (error) {
+    console.log(error)
+    Alert.alert("Error de conexión", "¡Imposible acceder a tus datos del controlador actual!")
+    return error;
+  })
+}
+
 export const createDevice = (body) => {
   console.log("POST device");
   const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId;
