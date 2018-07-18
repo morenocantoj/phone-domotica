@@ -18,15 +18,31 @@ class Devices extends Component {
         <FlatList
           data={this.props.devices}
           keyExtractor={(item)=> item.dispositivo_id}
-          renderItem={({item}) => (
-            <ListItem
-              title={item.nombre}
-              subtitle={'Aire acondicionado'}
-              leftIcon={{ name: 'cloud'}}
-              rightTitle={item.temperatura + ' ºC'}
-              onPress={ () => this.goToClimatization(item.dispositivo_id, item.temperatura)}
-            />
-          )}
+          renderItem={({item}) => {
+            if (item.tipo == "clima") {
+              return (
+                <ListItem
+                  title={item.nombre}
+                  subtitle={'Climatización'}
+                  leftIcon={{ name: 'cloud'}}
+                  rightIcon={{ name: 'settings' }}
+                  rightTitle={item.temperatura + ' ºC'}
+                  onPress={ () => this.goToClimatization(item.dispositivo_id, item.temperatura)}
+                />
+              )
+            } else if (item.tipo == "light") {
+              return (
+                <ListItem
+                  title={item.nombre}
+                  subtitle={'Luz'}
+                  leftIcon={{ name: 'highlight'}}
+                  rightIcon={{ name: 'power-settings-new' }}
+                  rightTitle={item.status ? 'ON' : 'OFF'}
+                  onPress={ () => console.log("Activate light!!")}
+                />
+              )
+            }
+          }}
         />
       </List>
     )
