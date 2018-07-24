@@ -9,12 +9,14 @@ import moment from 'moment'
 import ClimaPicker from '../components/ClimaPicker'
 import { programDevice } from '../API/methods'
 import Toast, { DURATION } from 'react-native-easy-toast'
+import LightPicker from '../components/LightPicker'
 
 class ProgramationView extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      type: props.kindProgramation,
       hour: 14,
       minute: 0,
       date: moment(new Date()).format('YYYY-MM-DD'),
@@ -23,7 +25,8 @@ class ProgramationView extends Component {
       elementSelected: 0,
       deviceSelected: props.devices[0].dispositivo_id,
 
-      clima: 21
+      clima: 21,
+      engage: true
     }
   }
 
@@ -44,30 +47,32 @@ class ProgramationView extends Component {
     return (
       <RadioForm>
         { this.props.devices.map((device, i) => {
-          return (
-            <RadioButton
-              labelHorizontal={true}
-              key={i}>
-              <RadioButtonInput
-                obj={device}
-                index={i}
-                isSelected={this.state.elementSelected === i}
-                onPress={ (value, index) => this.selectOption(device, index) }
-                buttonWrapStyle={{ marginRight: 15 }}
-                buttonInnerColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
-                buttonOuterColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
-                buttonSize={12}
-                borderWidth={1}
-              />
-              <Text
-                onPress={ () => this.selectOption(device, i) }
-                textAlign={'left'}
-                style={styles.radioText}
-                >
-                { device.nombre }
-              </Text>
-            </RadioButton>
-          )
+          if (device.tipo == this.state.type) {
+            return (
+              <RadioButton
+                labelHorizontal={true}
+                key={i}>
+                <RadioButtonInput
+                  obj={device}
+                  index={i}
+                  isSelected={this.state.elementSelected === i}
+                  onPress={ (value, index) => this.selectOption(device, index) }
+                  buttonWrapStyle={{ marginRight: 15 }}
+                  buttonInnerColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
+                  buttonOuterColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
+                  buttonSize={12}
+                  borderWidth={1}
+                />
+                <Text
+                  onPress={ () => this.selectOption(device, i) }
+                  textAlign={'left'}
+                  style={styles.radioText}
+                  >
+                  { device.nombre }
+                </Text>
+              </RadioButton>
+            )
+          }
         })}
       </RadioForm>
     )
@@ -83,6 +88,12 @@ class ProgramationView extends Component {
   updateClima(clima) {
     this.setState({
       clima: clima
+    })
+  }
+
+  updateEngage(value) {
+    this.setState({
+      engage: value
     })
   }
 
@@ -118,6 +129,27 @@ class ProgramationView extends Component {
       })
   }
 
+  // Renders the value component depending of the type of device
+  renderValue() {
+    switch (this.state.type) {
+      case "clima":
+        return (
+          <ClimaPicker
+          clima={this.state.clima}
+          onUpdate={(newClima) => this.updateClima(newClima)}/>
+        )
+        break;
+      case "light":
+        return (
+          <LightPicker
+            onUpdate={(newValue) => this.updateEngage(newValue)}/>
+        )
+        break;
+      default:
+        console.log("Option not implemented!")
+    }
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -151,9 +183,8 @@ class ProgramationView extends Component {
             }}
             />
           <Subheader text={'Valor programado'}/>
-          <ClimaPicker
-            clima={this.state.clima}
-            onUpdate={(newClima) => this.updateClima(newClima)}/>
+          { this.renderValue() }
+
           <Subheader text={'Dispositivos disponibles (climatización)'}/>
           <View style={styles.devices}>
             { this.renderProgramation() }
