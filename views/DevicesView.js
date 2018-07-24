@@ -70,7 +70,13 @@ class DevicesView extends Component {
   render() {
     return (
       <ScrollView>
-        <Devices devices={this.state.devices} onSelectDevice={(deviceId, climaDevice) => this.onSelectDevice(deviceId, climaDevice)}/>
+        <Devices 
+          devices={this.state.devices} 
+          houseId={this.state.houseId}
+          controllerId={this.state.controllerId}
+          token={this.state.userToken}
+          onSelectDevice={(deviceId, climaDevice) => this.onSelectDevice(deviceId, climaDevice)}
+          onChangeDevice={() => this.getDevices() }/>
         <Modal
           animationType="slide"
           transparent={false}

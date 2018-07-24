@@ -38,7 +38,8 @@ class ControllerView extends Component {
         this.goToClimaProgramation(this.state.controller.dispositivos)
         break;
       case 'highlight':
-        console.log("IMPLEMENT!")
+        // Go to light programation
+        this.goToLightProgramation(this.state.controller.dispositivos)
         break
       default:
         break
@@ -46,7 +47,11 @@ class ControllerView extends Component {
   }
 
   goToClimaProgramation(devices) {
-    this.props.goProgramation("climatization", devices, this.props.controllerId, this.props.houseId)
+    this.props.goProgramation("clima", devices, this.props.controllerId, this.props.houseId)
+  }
+
+  goToLightProgramation(devices) {
+    this.props.goProgramation("light", devices, this.props.controllerId, this.props.houseId)
   }
 
   render() {

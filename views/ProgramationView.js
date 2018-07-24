@@ -7,30 +7,33 @@ import RadioForm, { RadioButton, RadioButtonInput } from 'react-native-simple-ra
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import ClimaPicker from '../components/ClimaPicker'
-import { programDevice } from '../API/methods'
+import { programDevice, programLightDevice } from '../API/methods'
 import Toast, { DURATION } from 'react-native-easy-toast'
+import LightPicker from '../components/LightPicker'
 
 class ProgramationView extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      type: props.kindProgramation,
       hour: 14,
       minute: 0,
       date: moment(new Date()).format('YYYY-MM-DD'),
 
       firstElement: 0,
       elementSelected: 0,
-      deviceSelected: props.devices[0].dispositivo_id,
+      deviceSelected: props.devices[0],
 
-      clima: 21
+      clima: 21,
+      engage: true
     }
   }
 
   selectOption(device, i) {
     this.setState({
       elementSelected: i,
-      deviceSelected: device.dispositivo_id
+      deviceSelected: device
     })
   }
 
@@ -44,30 +47,32 @@ class ProgramationView extends Component {
     return (
       <RadioForm>
         { this.props.devices.map((device, i) => {
-          return (
-            <RadioButton
-              labelHorizontal={true}
-              key={i}>
-              <RadioButtonInput
-                obj={device}
-                index={i}
-                isSelected={this.state.elementSelected === i}
-                onPress={ (value, index) => this.selectOption(device, index) }
-                buttonWrapStyle={{ marginRight: 15 }}
-                buttonInnerColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
-                buttonOuterColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
-                buttonSize={12}
-                borderWidth={1}
-              />
-              <Text
-                onPress={ () => this.selectOption(device, i) }
-                textAlign={'left'}
-                style={styles.radioText}
-                >
-                { device.nombre }
-              </Text>
-            </RadioButton>
-          )
+          if (device.tipo == this.state.type) {
+            return (
+              <RadioButton
+                labelHorizontal={true}
+                key={i}>
+                <RadioButtonInput
+                  obj={device}
+                  index={i}
+                  isSelected={this.state.elementSelected === i}
+                  onPress={ (value, index) => this.selectOption(device, index) }
+                  buttonWrapStyle={{ marginRight: 15 }}
+                  buttonInnerColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
+                  buttonOuterColor={ this.state.elementSelected === i ? '#FFC107' : '#2196F3' }
+                  buttonSize={12}
+                  borderWidth={1}
+                />
+                <Text
+                  onPress={ () => this.selectOption(device, i) }
+                  textAlign={'left'}
+                  style={styles.radioText}
+                  >
+                  { device.nombre }
+                </Text>
+              </RadioButton>
+            )
+          }
         })}
       </RadioForm>
     )
@@ -83,6 +88,12 @@ class ProgramationView extends Component {
   updateClima(clima) {
     this.setState({
       clima: clima
+    })
+  }
+
+  updateEngage(value) {
+    this.setState({
+      engage: value
     })
   }
 
@@ -103,19 +114,62 @@ class ProgramationView extends Component {
 
     var fecha = this.state.date+' '+this.state.hour+':'+minute
 
-    programDevice({token: this.props.user.token,
-      houseId: this.props.houseId,
-      controllerId: this.props.controllerId,
-      deviceId: this.state.deviceSelected,
-      fecha: fecha,
-      clima: this.state.clima}).then((response) => {
-        this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
-          this.props.goBack()
-        });
+    switch (this.state.deviceSelected.tipo) {
+      case "clima":
+        programDevice({token: this.props.user.token,
+          houseId: this.props.houseId,
+          controllerId: this.props.controllerId,
+          deviceId: this.state.deviceSelected.dispositivo_id,
+          fecha: fecha,
+          clima: this.state.clima}).then((response) => {
+            this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+              this.props.goBack()
+            });
 
-      }).catch((error) => {
-        this.refs.toast.show('¡Error al programar dispositivo!', 1500)
-      })
+          }).catch((error) => {
+            this.refs.toast.show('¡Error al programar dispositivo!', 1500)
+          })
+        break;
+      case "light":
+        programLightDevice({token: this.props.user.token,
+          houseId: this.props.houseId,
+          controllerId: this.props.controllerId,
+          deviceId: this.state.deviceSelected.dispositivo_id,
+          fecha: fecha,
+          engage: this.state.engage}).then((response) => {
+            this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+              this.props.goBack()
+            });
+
+          }).catch((error) => {
+            this.refs.toast.show('¡Error al programar dispositivo!', 1500)
+          })
+        break;
+      default:
+        console.log("Option not implemented!")
+    }
+
+  }
+
+  // Renders the value component depending of the type of device
+  renderValue() {
+    switch (this.state.type) {
+      case "clima":
+        return (
+          <ClimaPicker
+          clima={this.state.clima}
+          onUpdate={(newClima) => this.updateClima(newClima)}/>
+        )
+        break;
+      case "light":
+        return (
+          <LightPicker
+            onUpdate={(newValue) => this.updateEngage(newValue)}/>
+        )
+        break;
+      default:
+        console.log("Option not implemented!")
+    }
   }
 
   render() {
@@ -151,9 +205,8 @@ class ProgramationView extends Component {
             }}
             />
           <Subheader text={'Valor programado'}/>
-          <ClimaPicker
-            clima={this.state.clima}
-            onUpdate={(newClima) => this.updateClima(newClima)}/>
+          { this.renderValue() }
+
           <Subheader text={'Dispositivos disponibles (climatización)'}/>
           <View style={styles.devices}>
             { this.renderProgramation() }
