@@ -14,11 +14,10 @@ class LightPicker extends Component {
   }
 
   setEngage(value) {
-    console.log("Engage "+ value)
     this.setState({
       engage: value,
     })
-    this.props.onUpdate(this.state.engage)
+    this.props.onUpdate(value)
   }
 
   render() {

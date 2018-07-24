@@ -7,7 +7,7 @@ import RadioForm, { RadioButton, RadioButtonInput } from 'react-native-simple-ra
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import ClimaPicker from '../components/ClimaPicker'
-import { programDevice } from '../API/methods'
+import { programDevice, programLightDevice } from '../API/methods'
 import Toast, { DURATION } from 'react-native-easy-toast'
 import LightPicker from '../components/LightPicker'
 
@@ -23,7 +23,7 @@ class ProgramationView extends Component {
 
       firstElement: 0,
       elementSelected: 0,
-      deviceSelected: props.devices[0].dispositivo_id,
+      deviceSelected: props.devices[0],
 
       clima: 21,
       engage: true
@@ -33,7 +33,7 @@ class ProgramationView extends Component {
   selectOption(device, i) {
     this.setState({
       elementSelected: i,
-      deviceSelected: device.dispositivo_id
+      deviceSelected: device
     })
   }
 
@@ -114,19 +114,41 @@ class ProgramationView extends Component {
 
     var fecha = this.state.date+' '+this.state.hour+':'+minute
 
-    programDevice({token: this.props.user.token,
-      houseId: this.props.houseId,
-      controllerId: this.props.controllerId,
-      deviceId: this.state.deviceSelected,
-      fecha: fecha,
-      clima: this.state.clima}).then((response) => {
-        this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
-          this.props.goBack()
-        });
+    switch (this.state.deviceSelected.tipo) {
+      case "clima":
+        programDevice({token: this.props.user.token,
+          houseId: this.props.houseId,
+          controllerId: this.props.controllerId,
+          deviceId: this.state.deviceSelected.dispositivo_id,
+          fecha: fecha,
+          clima: this.state.clima}).then((response) => {
+            this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+              this.props.goBack()
+            });
 
-      }).catch((error) => {
-        this.refs.toast.show('¡Error al programar dispositivo!', 1500)
-      })
+          }).catch((error) => {
+            this.refs.toast.show('¡Error al programar dispositivo!', 1500)
+          })
+        break;
+      case "light":
+        programLightDevice({token: this.props.user.token,
+          houseId: this.props.houseId,
+          controllerId: this.props.controllerId,
+          deviceId: this.state.deviceSelected.dispositivo_id,
+          fecha: fecha,
+          engage: this.state.engage}).then((response) => {
+            this.refs.toast.show('Dispositivo programado correctamente', 1000, () => {
+              this.props.goBack()
+            });
+
+          }).catch((error) => {
+            this.refs.toast.show('¡Error al programar dispositivo!', 1500)
+          })
+        break;
+      default:
+        console.log("Option not implemented!")
+    }
+
   }
 
   // Renders the value component depending of the type of device
