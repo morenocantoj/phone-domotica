@@ -128,11 +128,12 @@ export const programDevice = (body) => {
 export const programLightDevice = (body) => {
   console.log("PUT program device")
   const url = API_URL+'/casas/'+body.houseId+'/controller/'+body.controllerId+'/programacion'
+  var engage = body.engage ? 'ON' : 'OFF'
 
   var jsonBody = {
     dispositivo_id: body.deviceId,
     fecha: body.fecha,
-    action: 'PUT light ' + body.engage
+    action: 'PUT light ' + engage
   }
 
   return fetch(url, {
